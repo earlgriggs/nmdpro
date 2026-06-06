@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attorney Portal Preview — NavigateMyDebt.com</title>
+<meta name="description" content="See what the NavigateMyDebt attorney portal looks like before subscribing — real dashboard, sample client data.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%232e6b7e'/%3E%3Cpolygon points='50,8 38,46 50,40 62,46' fill='%23e8a020'/%3E%3Cpolygon points='50,92 38,54 50,60 62,54' fill='%23ffffff' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='9' fill='%231f4f5e'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%234a9aae'/%3E%3C/svg%3E'>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2705151686188487');
+fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=2705151686188487&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+<style>
+:root{
+  --ink:#1e2d3d;
+  --slate:#4a5a6b;
+  --mist:#8a9aab;
+  --canvas:#f4f2ee;
+  --surface:#ffffff;
+  --lift:#eef2f7;
+  --border:#d4d8de;
+  --border-lt:#eaecef;
+  --teal:#2e6b7e;
+  --teal-dk:#1f4f5e;
+  --teal-lt:#e4f0f4;
+  --amber:#8a6200;
+  --amber-lt:#fef8e7;
+  --sage:#3d7a56;
+  --sage-lt:#eaf4ee;
+  --rose:#a0343a;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Georgia,sans-serif;color:var(--ink);background:var(--canvas);font-size:14px;line-height:1.5;-webkit-text-size-adjust:100%}
+
+/* Topbar */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.5rem;background:var(--surface);border-bottom:1px solid var(--border-lt);position:sticky;top:0;z-index:100}
+.brand{font-size:17px;font-weight:700;color:var(--teal);text-decoration:none;display:flex;align-items:center;gap:8px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.preview-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);background:var(--amber-lt);border:1px solid rgba(138,98,0,0.2);border-radius:99px;padding:4px 10px}
+.btn-back{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;font-weight:600;color:var(--teal);text-decoration:none;border:1.5px solid var(--teal);border-radius:20px;padding:5px 14px;transition:all 0.2s}
+.btn-back:hover{background:var(--teal);color:#fff}
+
+/* Preview banner */
+.preview-banner{background:var(--amber-lt);border-bottom:1.5px solid rgba(138,98,0,0.2);padding:10px 1.5rem;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--amber)}
+.preview-banner strong{font-weight:700}
+.preview-banner-icon{font-size:16px;flex-shrink:0}
+
+/* Dashboard */
+.dashboard{max-width:860px;margin:0 auto;padding:1.75rem 1.25rem 4rem}
+.dash-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap}
+.dash-welcome{font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-0.3px}
+.dash-firm{font-size:13px;color:var(--slate);margin-top:2px}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.75rem}
+.stat-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:12px;padding:1rem 1.125rem;box-shadow:0 1px 3px rgba(30,45,61,0.04)}
+.stat-number{font-size:28px;font-weight:800;color:var(--teal);letter-spacing:-0.5px;line-height:1}
+.stat-label{font-size:11px;color:var(--mist);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+
+/* Intake link box */
+.intake-box{background:var(--teal-lt);border:1.5px solid var(--teal);border-radius:12px;padding:1.25rem;margin-bottom:1.75rem}
+.intake-box-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:.5rem}
+.intake-box-sub{font-size:12px;color:var(--slate);margin-bottom:.875rem;line-height:1.5}
+.intake-link-row{display:flex;gap:8px;align-items:center}
+.intake-link-display{flex:1;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--slate);font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-copy-demo{font-size:12px;font-weight:700;padding:9px 16px;border-radius:8px;border:none;background:var(--teal);color:#fff;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0;opacity:0.6}
+.intake-note{font-size:11px;color:var(--mist);margin-top:.5rem;font-style:italic}
+
+/* Client table */
+.section-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:.875rem}
+.client-table-wrap{background:var(--surface);border:1px solid var(--border-lt);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(30,45,61,0.04)}
+.client-table{width:100%;border-collapse:collapse}
+.client-table th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--mist);padding:10px 14px;border-bottom:1px solid var(--border-lt);text-align:left;background:var(--lift)}
+.client-table td{font-size:13px;color:var(--slate);padding:11px 14px;border-bottom:1px solid var(--border-lt);vertical-align:middle}
+.client-table tr:last-child td{border-bottom:none}
+.client-name{font-weight:600;color:var(--ink)}
+.client-email{font-size:11px;color:var(--mist);margin-top:1px}
+
+/* Status badges */
+.status-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:0.04em}
+.status-sent{background:var(--lift);color:var(--mist);border:1px solid var(--border)}
+.status-started{background:var(--amber-lt);color:var(--amber);border:1px solid rgba(138,98,0,0.2)}
+.status-complete{background:var(--sage-lt);color:var(--sage);border:1px solid rgba(61,122,86,0.2)}
+
+/* Completion bar */
+.completion-wrap{display:flex;align-items:center;gap:8px}
+.completion-bar{flex:1;height:6px;background:var(--border-lt);border-radius:99px;overflow:hidden;max-width:80px}
+.completion-fill{height:100%;border-radius:99px;background:var(--teal)}
+.completion-pct{font-size:11px;font-weight:700;color:var(--slate);min-width:28px}
+
+/* Report button */
+.btn-view-report{font-size:11px;font-weight:700;color:var(--teal);text-decoration:none;padding:4px 10px;border:1.5px solid var(--teal);border-radius:6px;white-space:nowrap;transition:all 0.15s;background:none;cursor:pointer;font-family:inherit}
+.btn-view-report:hover{background:var(--teal);color:#fff}
+.btn-view-report.pending{opacity:0.35;cursor:not-allowed;pointer-events:none;color:var(--mist);border-color:var(--border)}
+
+/* CTA section */
+.cta-section{background:var(--teal);border-radius:14px;padding:2rem 1.5rem;text-align:center;margin-top:2.5rem}
+.cta-title{font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.2px;margin-bottom:.5rem}
+.cta-sub{font-size:14px;font-style:italic;color:rgba(255,255,255,0.8);margin-bottom:1.25rem;line-height:1.5}
+.btn-subscribe{display:inline-block;background:#fff;color:var(--teal);font-family:inherit;font-size:15px;font-weight:700;padding:13px 32px;border-radius:10px;text-decoration:none;transition:all 0.15s}
+.btn-subscribe:hover{background:var(--amber-lt);color:var(--amber)}
+.cta-trust{font-size:12px;color:rgba(255,255,255,0.6);margin-top:.75rem}
+
+/* What you get section */
+.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.75rem 0}
+.what-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:12px;padding:1.125rem;box-shadow:0 1px 3px rgba(30,45,61,0.04)}
+.what-card-icon{font-size:20px;margin-bottom:8px}
+.what-card-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.what-card-text{font-size:12px;color:var(--slate);line-height:1.6}
+
+/* Notification example */
+.notif-example{background:var(--surface);border:1.5px solid var(--border-lt);border-radius:10px;padding:1rem 1.125rem;margin:1.75rem 0;box-shadow:0 1px 3px rgba(30,45,61,0.04)}
+.notif-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem;padding-bottom:.75rem;border-bottom:1px solid var(--border-lt)}
+.notif-icon{font-size:24px;flex-shrink:0}
+.notif-title{font-size:13px;font-weight:700;color:var(--ink)}
+.notif-sub{font-size:11px;color:var(--mist)}
+.notif-body{font-size:13px;color:var(--slate);line-height:1.7}
+.notif-body strong{color:var(--ink)}
+.notif-link{display:inline-block;margin-top:.75rem;font-size:13px;font-weight:700;color:var(--teal);text-decoration:none;border-bottom:1.5px solid var(--teal-lt)}
+
+/* Divider */
+.section-divider{display:flex;align-items:center;gap:12px;margin:2rem 0}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border-lt)}
+.section-divider span{font-size:12px;font-weight:700;color:var(--mist);white-space:nowrap;text-transform:uppercase;letter-spacing:0.08em}
+
+footer{max-width:860px;margin:2rem auto 0;padding:1.5rem 1.25rem 2rem;border-top:1px solid var(--border-lt);display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center}
+footer div{font-size:11px;color:var(--mist);line-height:1.5;max-width:580px}
+footer a{color:var(--teal);text-decoration:none}
+
+@media(max-width:640px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .what-grid{grid-template-columns:1fr}
+  .client-table th:nth-child(3),.client-table td:nth-child(3){display:none}
+  .intake-link-row{flex-direction:column}
+  .btn-copy-demo{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <a href="https://navigatemydebt.com/attorney.html" class="brand">
+    <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="50" fill="#2e6b7e"/>
+      <g id="topbar-needle">
+        <polygon points="50,8 38,46 50,40 62,46" fill="#e8a020"/>
+        <polygon points="50,92 38,54 50,60 62,54" fill="#ffffff" opacity="0.5"/>
+      </g>
+      <circle cx="50" cy="50" r="9" fill="#1f4f5e"/>
+      <circle cx="50" cy="50" r="5" fill="#4a9aae"/>
+    </svg>
+    NavigateMyDebt.com
+  </a>
+  <div class="topbar-right">
+    <span class="preview-badge">Preview</span>
+    <a href="https://navigatemydebt.com/attorney.html" class="btn-back" onclick="if(document.referrer){event.preventDefault();history.back()}">← Go back</a>
+  </div>
+</div>
+
+<!-- Preview banner -->
+<div class="preview-banner">
+  <span class="preview-banner-icon">👁️</span>
+  <div><strong>This is a preview.</strong> Sample data only — no real clients shown. Subscribe to activate your portal and start sending intake links.</div>
+</div>
+
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="dash-header">
+    <div>
+      <div class="dash-welcome">Welcome, Sample Attorney</div>
+      <div class="dash-firm">Sample Law Office · Texas</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Total clients</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">5</div>
+      <div class="stat-label">Reports ready</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2</div>
+      <div class="stat-label">In progress</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">1</div>
+      <div class="stat-label">Link sent</div>
+    </div>
+  </div>
+
+  <!-- Intake link -->
+  <div class="intake-box">
+    <div class="intake-box-title">Your client intake link</div>
+    <div class="intake-box-sub">Send this link to any prospective client. They'll complete their debt intake privately — no payment required on their end. You'll be notified when their Big Picture report is ready.</div>
+    <div class="intake-link-row">
+      <div class="intake-link-display">https://navigatemydebt.com/intake.html?ref=your-unique-token</div>
+      <button class="btn-copy-demo" onclick="showCopyNote()">Copy link</button>
+    </div>
+    <div class="intake-note" id="copy-note">This is a preview — your unique intake link is generated when you subscribe.</div>
+  </div>
+
+  <!-- What you get section -->
+  <div class="section-divider"><span>What this dashboard does for you</span></div>
+
+  <div class="what-grid">
+    <div class="what-card">
+      <div class="what-card-icon">📬</div>
+      <div class="what-card-title">One link, unlimited clients</div>
+      <div class="what-card-text">Your unique intake link works for every prospective client. Send it by email, text, or include it in your intake paperwork.</div>
+    </div>
+    <div class="what-card">
+      <div class="what-card-icon">📊</div>
+      <div class="what-card-title">Real-time completion tracking</div>
+      <div class="what-card-text">See exactly where each client stands — link sent, intake started, report ready. Know who to follow up with before the consultation.</div>
+    </div>
+    <div class="what-card">
+      <div class="what-card-icon">🔔</div>
+      <div class="what-card-title">Email notification on completion</div>
+      <div class="what-card-text">The moment a client finishes their intake, you receive an email with their name and a link to their dashboard record.</div>
+    </div>
+    <div class="what-card">
+      <div class="what-card-icon">📋</div>
+      <div class="what-card-title">Big Picture report for every client</div>
+      <div class="what-card-text">Every client you refer automatically receives a full Big Picture report — creditor list, DTI, means test, priority issues, and personalized questions.</div>
+    </div>
+  </div>
+
+  <!-- Email notification example -->
+  <div class="section-divider"><span>What you receive when a client completes their intake</span></div>
+
+  <div class="notif-example">
+    <div class="notif-header">
+      <div class="notif-icon">✉️</div>
+      <div>
+        <div class="notif-title">NavigateMyDebt — Client intake complete</div>
+        <div class="notif-sub">From: info@navigatemydebt.com &nbsp;·&nbsp; To: attorney@samplelawoffice.com</div>
+      </div>
+    </div>
+    <div class="notif-body">
+      A client you referred to NavigateMyDebt.com has completed their intake. Their Big Picture report is ready to review in your attorney dashboard.<br><br>
+      <strong>Client name:</strong> Maria R.<br>
+      <strong>Client email:</strong> maria.r@email.com<br>
+      <strong>Completed:</strong> June 6, 2026 at 9:14 AM<br><br>
+      <a class="notif-link" href="#">Log in to your dashboard →</a>
+    </div>
+  </div>
+
+  <!-- Client tracker -->
+  <div class="section-divider"><span>Sample client intake tracker</span></div>
+
+  <div class="section-title">Client intake tracker <span style="font-size:12px;font-weight:400;color:var(--mist);margin-left:6px">— sample data</span></div>
+
+  <div class="client-table-wrap">
+    <table class="client-table">
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Status</th>
+          <th>Completion</th>
+          <th>Referred</th>
+          <th>Report</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="client-name">Maria R.</div>
+            <div class="client-email">maria.r@email.com</div>
+          </td>
+          <td><span class="status-badge status-complete">Complete</span></td>
+          <td>
+            <div class="completion-wrap">
+              <div class="completion-bar"><div class="completion-fill" style="width:100%"></div></div>
+              <div class="completion-pct">100%</div>
+            </div>
+          </td>
+          <td>Jun 1, 2026</td>
+          <td><button class="btn-view-report">View report</button></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="client-name">James T.</div>
+            <div class="client-email">james.t@email.com</div>
+          </td>
+          <td><span class="status-badge status-complete">Complete</span></td>
+          <td>
+            <div class="completion-wrap">
+              <div class="completion-bar"><div class="completion-fill" style="width:100%"></div></div>
+              <div class="completion-pct">100%</div>
+            </div>
+          </td>
+          <td>May 28, 2026</td>
+          <td><button class="btn-view-report">View report</button></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="client-name">Sandra K.</div>
+            <div class="client-email">sandra.k@email.com</div>
+          </td>
+          <td><span class="status-badge status-complete">Complete</span></td>
+          <td>
+            <div class="completion-wrap">
+              <div class="completion-bar"><div class="completion-fill" style="width:100%"></div></div>
+              <div class="completion-pct">100%</div>
+            </div>
+          </td>
+          <td>May 25, 2026</td>
+          <td><button class="btn-view-report">View report</button></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="client-name">David M.</div>
+            <div class="client-email">david.m@email.com</div>
+          </td>
+          <td><span class="status-badge status-complete">Complete</span></td>
+          <td>
+            <div class="completion-wrap">
+              <div class="completion-bar"><div class="completion-fill" style="width:100%"></div></div>
+              <div class="completion-pct">100%</div>
+            </div>
+          </td>
+          <td>May 22, 2026</td>
+          <td><button class="btn-view-report">View report</button></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="client-name">Priya N.</div>
+            <div class="client-email">priya.n@email.com</div>
+          </td>
+          <td><span class="status-badge status-complete">Complete</span></td>
+          <td>
+            <div class="completion-wrap">
+              <div class="completion-bar"><div class="completion-fill" style="width:100%"></div></div>
+              <div class="completion-pct">100%</div>
+            </div>
+          </td>
+          <td>May 19, 2026</td>
+          <td><button class="btn-view-report">View report</button></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="client-name">Robert C.</div>
+            <div class="client-email">robert.c@email.com</div>
+          </td>
+          <td><span class="status-badge status-started">In progress</span></td>
+          <td>
+            <div class="completion-wrap">
+              <div class="completion-bar"><div class="completion-fill" style="width:68%"></div></div>
+              <div class="completion-pct">68%</div>
+            </div>
+          </td>
+          <td>Jun 4, 2026</td>
+          <td><button class="btn-view-report pending" disabled>Pending</button></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="client-name">Angela W.</div>
+            <div class="client-email">angela.w@email.com</div>
+          </td>
+          <td><span class="status-badge status-started">In progress</span></td>
+          <td>
+            <div class="completion-wrap">
+              <div class="completion-bar"><div class="completion-fill" style="width:41%"></div></div>
+              <div class="completion-pct">41%</div>
+            </div>
+          </td>
+          <td>Jun 5, 2026</td>
+          <td><button class="btn-view-report pending" disabled>Pending</button></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="client-name">Thomas B.</div>
+            <div class="client-email">thomas.b@email.com</div>
+          </td>
+          <td><span class="status-badge status-sent">Link sent</span></td>
+          <td>
+            <div class="completion-wrap">
+              <div class="completion-bar"><div class="completion-fill" style="width:0%"></div></div>
+              <div class="completion-pct">0%</div>
+            </div>
+          </td>
+          <td>Jun 6, 2026</td>
+          <td><button class="btn-view-report pending" disabled>Pending</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Report viewer note -->
+  <div style="background:var(--lift);border:1px solid var(--border-lt);border-radius:10px;padding:1rem 1.125rem;margin-top:1rem;font-size:12px;color:var(--slate);line-height:1.6">
+    <strong style="color:var(--ink)">View report</strong> opens the client's full Big Picture report — their creditor list, income and expense snapshot, DTI calculation, means test comparison, document checklist status, organization score, priority issues flagged from their profile, and personalized questions for their consultation. Everything organized, before they walk in.
+  </div>
+
+  <!-- Report preview link -->
+  <div style="text-align:center;margin-top:2rem;padding:1.5rem;background:var(--surface);border:1.5px solid var(--border-lt);border-radius:14px;box-shadow:0 1px 4px rgba(30,45,61,0.05)">
+    <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:.375rem">Curious what they actually bring you?</div>
+    <div style="font-size:13px;color:var(--slate);margin-bottom:1rem;line-height:1.6">See the full Big Picture report your clients arrive with — every section, real sample data.</div>
+    <a href="https://navigatemydebt.com/attorney-report-preview.html" style="display:inline-block;background:var(--teal);color:#fff;font-size:14px;font-weight:700;padding:11px 28px;border-radius:10px;text-decoration:none;transition:background 0.15s" onmouseover="this.style.background='#1f4f5e'" onmouseout="this.style.background='#2e6b7e'">See what your prepared clients can bring you →</a>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-title">Ready to start sending intake links?</div>
+    <div class="cta-sub">Subscribe and your dashboard is live immediately. Send your first intake link today.</div>
+    <a href="https://navigatemydebt.com/attorney.html" class="btn-subscribe">Subscribe — $299/month</a>
+    <div class="cta-trust">Cancel anytime &nbsp;·&nbsp; Unlimited client intake links &nbsp;·&nbsp; Big Picture report for every client</div>
+  </div>
+
+</div>
+
+<footer>
+  <div>&#169; 2026 Financial Compliance Systems, LLC. All rights reserved.</div>
+  <div>NavigateMyDebt.com is not a law firm and does not provide legal advice. Attorney portal access is subject to an active subscription.</div>
+  <div style="margin-top:4px"><a href="mailto:info@navigatemydebt.com">info@navigatemydebt.com</a></div>
+</footer>
+
+<script>
+// Topbar compass animation
+(function(){
+  var needle=document.getElementById('topbar-needle');
+  if(!needle)return;
+  var cx=50,cy=50,start=null;
+  var DRIFT=600,PAUSE=250,SETTLE=900,TARGET=0;
+  function easeOutElastic(t){var c4=(2*Math.PI)/4.5;return t===0?0:t===1?1:Math.pow(2,-10*t)*Math.sin((t*10-0.75)*c4)+1;}
+  function easeInOutSine(t){return-(Math.cos(Math.PI*t)-1)/2;}
+  function drift(t){return Math.sin(t*Math.PI*2.1)*38+Math.sin(t*Math.PI*3.7+0.8)*18+Math.sin(t*Math.PI*5.3+1.4)*9;}
+  function angle(ms){
+    if(ms<DRIFT)return drift(ms/DRIFT);
+    if(ms<DRIFT+PAUSE){var t=(ms-DRIFT)/PAUSE;return drift(1)*(1-easeInOutSine(t));}
+    var t=Math.min((ms-DRIFT-PAUSE)/SETTLE,1);return easeOutElastic(t)*TARGET;
+  }
+  function frame(ts){if(!start)start=ts;var ms=ts-start;needle.setAttribute('transform','rotate('+angle(ms)+','+cx+','+cy+')');if(ms<DRIFT+PAUSE+SETTLE+300)requestAnimationFrame(frame);}
+  setTimeout(function(){requestAnimationFrame(frame);},200);
+})();
+
+// Demo interactions — show note when copy is clicked
+function showCopyNote(){
+  const note=document.getElementById('copy-note');
+  note.textContent='Your unique intake link is generated when you subscribe — each practice gets a dedicated link.';
+  note.style.color='var(--amber)';
+  note.style.fontStyle='normal';
+  note.style.fontWeight='600';
+}
+
+// Demo report view button — show friendly message
+document.querySelectorAll('.btn-view-report:not(.pending)').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    alert('In your live dashboard, this button opens the client\'s full Big Picture report — creditor list, DTI, means test, priority issues, and personalized questions. Subscribe to activate.');
+  });
+});
+
+// Meta Pixel — ViewContent
+if(typeof fbq==='function'){
+  fbq('track','ViewContent',{content_name:'Attorney Portal Preview',content_category:'Attorney'});
+}
+</script>
+
+</body>
+</html>

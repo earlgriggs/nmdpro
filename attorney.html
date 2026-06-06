@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attorney Portal — NavigateMyDebt.com</title>
+<meta name="description" content="NavigateMyDebt Attorney Portal — your clients arrive organized, prepared, and ready for a productive first consultation.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%232e6b7e'/%3E%3Cpolygon points='50,8 38,46 50,40 62,46' fill='%23e8a020'/%3E%3Cpolygon points='50,92 38,54 50,60 62,54' fill='%23ffffff' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='9' fill='%231f4f5e'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%234a9aae'/%3E%3C/svg%3E">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2705151686188487');
+fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=2705151686188487&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --ink:#1e2d3d;
+  --slate:#4a5a6b;
+  --mist:#8a9aab;
+  --canvas:#f4f2ee;
+  --surface:#ffffff;
+  --lift:#eef2f7;
+  --border:#d4d8de;
+  --border-lt:#eaecef;
+  --teal:#2e6b7e;
+  --teal-dk:#1f4f5e;
+  --teal-lt:#e4f0f4;
+  --amber:#8a6200;
+  --amber-lt:#fef8e7;
+  --sage:#3d7a56;
+  --sage-lt:#eaf4ee;
+  --rose:#a0343a;
+  --rose-lt:#fdf0f0;
+  --purple:#4a2d8a;
+  --purple-lt:#f3f0f9;
+  --purple-border:#c9bfe8;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Georgia,sans-serif;color:var(--ink);background:var(--canvas);font-size:14px;line-height:1.5;-webkit-text-size-adjust:100%}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.5rem;background:var(--surface);border-bottom:1px solid var(--border-lt);position:sticky;top:0;z-index:100}
+.brand{font-size:17px;font-weight:700;color:var(--teal);text-decoration:none;display:flex;align-items:center;gap:8px}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.atty-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--teal);background:var(--teal-lt);border:1px solid rgba(46,107,126,0.2);border-radius:99px;padding:4px 10px}
+.btn-signout{font-size:12px;font-weight:600;color:var(--mist);background:none;border:none;cursor:pointer;font-family:inherit;padding:4px 8px;border-radius:6px;transition:color 0.15s}
+.btn-signout:hover{color:var(--rose)}
+
+/* ── LANDING / MARKETING ── */
+.landing{max-width:680px;margin:0 auto;padding:3rem 1.25rem 5rem}
+.landing-hero{text-align:center;padding:2rem 0 2.5rem}
+.landing-compass{width:56px;height:56px;margin:0 auto 1.25rem}
+.landing-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.75rem}
+.landing-title{font-size:clamp(24px,4vw,36px);font-weight:800;color:var(--ink);line-height:1.2;letter-spacing:-0.4px;margin-bottom:.875rem}
+.landing-sub{font-size:16px;color:var(--slate);line-height:1.7;max-width:500px;margin:0 auto 2rem;font-style:italic}
+
+.value-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 2.5rem}
+.value-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:12px;padding:1.125rem;box-shadow:0 1px 4px rgba(30,45,61,0.04)}
+.value-card-icon{font-size:20px;margin-bottom:8px}
+.value-card-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.value-card-text{font-size:12px;color:var(--slate);line-height:1.6}
+
+.pricing-box{background:var(--teal);border-radius:14px;padding:2rem;text-align:center;margin:0 0 2rem}
+.pricing-box-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:.5rem}
+.pricing-box-amt{font-size:48px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1}
+.pricing-box-period{font-size:14px;color:rgba(255,255,255,0.7);margin-top:4px;margin-bottom:1.25rem}
+.pricing-box-includes{list-style:none;text-align:left;max-width:280px;margin:0 auto 1.5rem}
+.pricing-box-includes li{font-size:13px;color:rgba(255,255,255,0.85);padding:5px 0;padding-left:20px;position:relative;line-height:1.4}
+.pricing-box-includes li::before{content:'✓';position:absolute;left:0;color:#e8a020;font-weight:700;font-size:12px}
+
+.btn-subscribe{display:inline-block;background:#fff;color:var(--teal);font-family:inherit;font-size:15px;font-weight:700;padding:13px 32px;border-radius:10px;text-decoration:none;transition:all 0.15s;border:none;cursor:pointer;width:100%;max-width:320px}
+.btn-subscribe:hover{background:var(--amber-lt);color:var(--amber)}
+
+.auth-divider{display:flex;align-items:center;gap:12px;margin:2rem 0}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-divider span{font-size:12px;color:var(--mist);white-space:nowrap}
+
+/* ── AUTH FORMS ── */
+.auth-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:14px;padding:1.75rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(30,45,61,0.05)}
+.auth-card-title{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:1.25rem}
+.field-group{margin-bottom:1rem}
+.field-label{font-size:12px;font-weight:600;color:var(--slate);margin-bottom:5px;display:block}
+.field-input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;color:var(--ink);background:var(--surface);transition:border-color 0.15s;outline:none}
+.field-input:focus{border-color:var(--teal)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-auth{width:100%;padding:12px;border-radius:8px;border:none;background:var(--teal);color:#fff;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:background 0.15s;margin-top:.25rem}
+.btn-auth:hover{background:var(--teal-dk)}
+.btn-auth:disabled{opacity:0.5;cursor:not-allowed}
+.auth-switch{font-size:12px;color:var(--mist);text-align:center;margin-top:.875rem}
+.auth-switch a{color:var(--teal);cursor:pointer;text-decoration:none;font-weight:600}
+.auth-error{font-size:12px;color:var(--rose);background:var(--rose-lt);border:1px solid #f5c0c0;border-radius:6px;padding:8px 12px;margin-bottom:.75rem;display:none}
+.auth-error.show{display:block}
+
+/* ── DASHBOARD ── */
+.dashboard{max-width:860px;margin:0 auto;padding:1.75rem 1.25rem 4rem}
+.dash-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap}
+.dash-welcome{font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-0.3px}
+.dash-firm{font-size:13px;color:var(--slate);margin-top:2px}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.75rem}
+.stat-card{background:var(--surface);border:1px solid var(--border-lt);border-radius:12px;padding:1rem 1.125rem;box-shadow:0 1px 3px rgba(30,45,61,0.04)}
+.stat-number{font-size:28px;font-weight:800;color:var(--teal);letter-spacing:-0.5px;line-height:1}
+.stat-label{font-size:11px;color:var(--mist);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+
+/* Intake link box */
+.intake-box{background:var(--teal-lt);border:1.5px solid var(--teal);border-radius:12px;padding:1.25rem;margin-bottom:1.75rem}
+.intake-box-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:.5rem}
+.intake-box-sub{font-size:12px;color:var(--slate);margin-bottom:.875rem;line-height:1.5}
+.intake-link-row{display:flex;gap:8px;align-items:center}
+.intake-link-display{flex:1;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--slate);font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-copy{font-size:12px;font-weight:700;padding:9px 16px;border-radius:8px;border:none;background:var(--teal);color:#fff;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background 0.15s;flex-shrink:0}
+.btn-copy:hover{background:var(--teal-dk)}
+.btn-copy.copied{background:var(--sage)}
+.intake-note{font-size:11px;color:var(--mist);margin-top:.5rem;font-style:italic}
+
+/* Client table */
+.section-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:.875rem;display:flex;align-items:center;justify-content:space-between}
+.client-table-wrap{background:var(--surface);border:1px solid var(--border-lt);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(30,45,61,0.04)}
+.client-table{width:100%;border-collapse:collapse}
+.client-table th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--mist);padding:10px 14px;border-bottom:1px solid var(--border-lt);text-align:left;background:var(--lift)}
+.client-table td{font-size:13px;color:var(--slate);padding:11px 14px;border-bottom:1px solid var(--border-lt);vertical-align:middle}
+.client-table tr:last-child td{border-bottom:none}
+.client-table tr:hover td{background:#fafbfc}
+.client-name{font-weight:600;color:var(--ink)}
+.client-email{font-size:11px;color:var(--mist);margin-top:1px}
+
+/* Status badges */
+.status-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:0.04em}
+.status-sent{background:var(--lift);color:var(--mist);border:1px solid var(--border)}
+.status-started{background:var(--amber-lt);color:var(--amber);border:1px solid rgba(138,98,0,0.2)}
+.status-complete{background:var(--sage-lt);color:var(--sage);border:1px solid rgba(61,122,86,0.2)}
+
+/* Completion bar */
+.completion-wrap{display:flex;align-items:center;gap:8px}
+.completion-bar{flex:1;height:6px;background:var(--border-lt);border-radius:99px;overflow:hidden;max-width:80px}
+.completion-fill{height:100%;border-radius:99px;background:var(--teal);transition:width 0.3s}
+.completion-pct{font-size:11px;font-weight:700;color:var(--slate);min-width:28px}
+
+/* Report link */
+.btn-view-report{font-size:11px;font-weight:700;color:var(--teal);text-decoration:none;padding:4px 10px;border:1.5px solid var(--teal);border-radius:6px;white-space:nowrap;transition:all 0.15s;background:none;cursor:pointer;font-family:inherit}
+.btn-view-report:hover{background:var(--teal);color:#fff}
+.btn-view-report:disabled{opacity:0.35;cursor:not-allowed;pointer-events:none}
+
+/* Empty state */
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--mist)}
+.empty-state-icon{font-size:32px;margin-bottom:.75rem}
+.empty-state-title{font-size:14px;font-weight:600;color:var(--slate);margin-bottom:.375rem}
+.empty-state-text{font-size:12px;line-height:1.6}
+
+/* Subscription warning */
+.sub-warning{background:var(--amber-lt);border:1.5px solid rgba(138,98,0,0.25);border-radius:10px;padding:1rem 1.125rem;margin-bottom:1.5rem;font-size:13px;color:var(--amber);line-height:1.6}
+.sub-warning strong{font-weight:700}
+
+/* Hidden utility */
+.hidden{display:none!important}
+
+footer{max-width:860px;margin:2rem auto 0;padding:1.5rem 1.25rem 2rem;border-top:1px solid var(--border-lt);display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center}
+footer div{font-size:11px;color:var(--mist);line-height:1.5;max-width:580px}
+footer a{color:var(--teal);text-decoration:none}
+
+@media(max-width:640px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .value-grid{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}
+  .intake-link-row{flex-direction:column}
+  .btn-copy{width:100%}
+  .client-table th:nth-child(3),.client-table td:nth-child(3){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="https://navigatemydebt.com" class="brand">
+    <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="50" fill="#2e6b7e"/>
+      <g id="topbar-needle">
+        <polygon points="50,8 38,46 50,40 62,46" fill="#e8a020"/>
+        <polygon points="50,92 38,54 50,60 62,54" fill="#ffffff" opacity="0.5"/>
+      </g>
+      <circle cx="50" cy="50" r="9" fill="#1f4f5e"/>
+      <circle cx="50" cy="50" r="5" fill="#4a9aae"/>
+    </svg>
+    NavigateMyDebt.com
+  </a>
+  <div class="topbar-right">
+    <span class="atty-badge hidden" id="atty-badge">Attorney Portal</span>
+    <button class="btn-signout hidden" id="btn-signout" onclick="signOut()">Sign out</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     LANDING / AUTH SCREEN (shown when not logged in)
+══════════════════════════════════════════════════ -->
+<div id="screen-landing">
+  <div class="landing">
+
+    <div class="landing-hero">
+      <div class="landing-compass">
+        <svg id="hero-compass" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="50" cy="50" r="50" fill="#2e6b7e"/>
+          <g id="hero-needle">
+            <polygon points="50,8 38,46 50,40 62,46" fill="#e8a020"/>
+            <polygon points="50,92 38,54 50,60 62,54" fill="#ffffff" opacity="0.5"/>
+          </g>
+          <circle cx="50" cy="50" r="9" fill="#1f4f5e"/>
+          <circle cx="50" cy="50" r="5" fill="#4a9aae"/>
+        </svg>
+      </div>
+      <div class="landing-label">Attorney Portal</div>
+      <h1 class="landing-title">Your clients arrive organized.<br>Your consultations start stronger.</h1>
+      <p class="landing-sub">NavigateMyDebt gives your prospective clients a private space to complete their debt intake before they sit across from you — so you spend less time on triage and more time on the work that actually bills.</p>
+    </div>
+
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="value-card-icon">📋</div>
+        <div class="value-card-title">Organized intake</div>
+        <div class="value-card-text">Creditor list, income snapshot, expense breakdown, document checklist — completed before the first consultation.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-card-icon">⏱️</div>
+        <div class="value-card-title">Less unbillable triage</div>
+        <div class="value-card-text">Stop extracting basic information during consultations. Your clients arrive with the picture already assembled.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-card-icon">📊</div>
+        <div class="value-card-title">Big Picture report</div>
+        <div class="value-card-text">Every referred client automatically receives a full Big Picture report — DTI, means test, chapter overview, priority issues, and personalized questions.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-card-icon">🔔</div>
+        <div class="value-card-title">Instant notification</div>
+        <div class="value-card-text">You're notified by email the moment a client completes their intake. Their name, email, and report are ready in your dashboard.</div>
+      </div>
+    </div>
+
+    <div class="pricing-box">
+      <div class="pricing-box-label">Attorney Portal Subscription</div>
+      <div class="pricing-box-amt">$299</div>
+      <div class="pricing-box-period">per month · unlimited client intake links</div>
+      <ul class="pricing-box-includes">
+        <li>Unlimited client intake links</li>
+        <li>Big Picture report for every client</li>
+        <li>Real-time completion dashboard</li>
+        <li>Email notification on completion</li>
+        <li>48-hour client reminder emails</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="https://buy.stripe.com/00w3cve4maJg7c06QbeME0b" class="btn-subscribe">Subscribe — $299/month</a>
+    </div>
+
+    <div class="auth-divider"><span>Already subscribed? Sign in below</span></div>
+
+    <!-- LOGIN FORM -->
+    <div class="auth-card" id="form-login">
+      <div class="auth-card-title">Attorney sign in</div>
+      <div class="auth-error" id="login-error"></div>
+      <div class="field-group">
+        <label class="field-label">Email address</label>
+        <input type="email" class="field-input" id="login-email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Password</label>
+        <input type="password" class="field-input" id="login-password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="btn-auth" id="login-btn" onclick="signIn()">Sign in to portal</button>
+      <div class="auth-switch">New subscriber? <a onclick="showRegister()">Create your account</a></div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="auth-card hidden" id="form-register">
+      <div class="auth-card-title">Create your attorney account</div>
+      <div class="auth-error" id="reg-error"></div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">First name</label>
+          <input type="text" class="field-input" id="reg-first" placeholder="First">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Last name</label>
+          <input type="text" class="field-input" id="reg-last" placeholder="Last">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Firm name</label>
+        <input type="text" class="field-input" id="reg-firm" placeholder="Law Office of...">
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">State</label>
+          <input type="text" class="field-input" id="reg-state" placeholder="TX" maxlength="2">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Phone</label>
+          <input type="tel" class="field-input" id="reg-phone" placeholder="(555) 000-0000">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email address</label>
+        <input type="email" class="field-input" id="reg-email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Password</label>
+        <input type="password" class="field-input" id="reg-password" placeholder="Minimum 8 characters" autocomplete="new-password">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Confirm password</label>
+        <input type="password" class="field-input" id="reg-password2" placeholder="Confirm password" autocomplete="new-password">
+      </div>
+      <button class="btn-auth" id="reg-btn" onclick="register()">Create account</button>
+      <div class="auth-switch">Already have an account? <a onclick="showLogin()">Sign in</a></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     DASHBOARD (shown when logged in)
+══════════════════════════════════════════════════ -->
+<div id="screen-dashboard" class="hidden">
+  <div class="dashboard">
+
+    <div class="dash-header">
+      <div>
+        <div class="dash-welcome" id="dash-welcome">Welcome back</div>
+        <div class="dash-firm" id="dash-firm"></div>
+      </div>
+    </div>
+
+    <!-- Subscription warning if inactive -->
+    <div class="sub-warning hidden" id="sub-warning">
+      <strong>Subscription inactive.</strong> Your portal access requires an active subscription. <a href="https://buy.stripe.com/00w3cve4maJg7c06QbeME0b" style="color:var(--amber);font-weight:700">Reactivate — $299/month →</a>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number" id="stat-total">0</div>
+        <div class="stat-label">Total clients</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-complete">0</div>
+        <div class="stat-label">Reports ready</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-started">0</div>
+        <div class="stat-label">In progress</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-pending">0</div>
+        <div class="stat-label">Link sent</div>
+      </div>
+    </div>
+
+    <!-- Intake link -->
+    <div class="intake-box">
+      <div class="intake-box-title">Your client intake link</div>
+      <div class="intake-box-sub">Send this link to any prospective client. They'll complete their debt intake privately — no payment required on their end. You'll be notified when their Big Picture report is ready.</div>
+      <div class="intake-link-row">
+        <div class="intake-link-display" id="intake-link-display">Loading...</div>
+        <button class="btn-copy" id="btn-copy" onclick="copyIntakeLink()">Copy link</button>
+      </div>
+      <div class="intake-note">Each client who uses this link is automatically added to your dashboard below.</div>
+    </div>
+
+    <!-- Client list -->
+    <div class="section-title">
+      <span>Client intake tracker</span>
+    </div>
+
+    <div class="client-table-wrap">
+      <table class="client-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Status</th>
+            <th>Completion</th>
+            <th>Referred</th>
+            <th>Report</th>
+          </tr>
+        </thead>
+        <tbody id="client-tbody">
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                <div class="empty-state-icon">📬</div>
+                <div class="empty-state-title">No clients yet</div>
+                <div class="empty-state-text">Copy your intake link above and send it to your first prospective client.<br>They'll appear here once they open the link.</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div>&#169; 2026 Financial Compliance Systems, LLC. All rights reserved.</div>
+  <div>NavigateMyDebt.com is not a law firm and does not provide legal advice. Attorney portal access is subject to an active subscription.</div>
+  <div style="margin-top:4px"><a href="mailto:info@navigatemydebt.com">info@navigatemydebt.com</a></div>
+</footer>
+
+<script>
+// ============================================================
+// SUPABASE
+// ============================================================
+const SUPABASE_URL = 'https://dactkqiidmhzebblypll.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_9sFFbYt5WfEt1N1qyisKuA_hZ3L9Bpv';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const STRIPE_STANDARD = 'https://buy.stripe.com/00w3cve4maJg7c06QbeME0b';
+// NOTE: $99 founding rate link is shared privately only — never referenced here
+// STRIPE_FOUNDING = 'https://buy.stripe.com/cNieVd2lEaJg0NC1vReME0a'
+
+let currentAttorney = null;
+
+// ============================================================
+// INIT — check auth state on load
+// ============================================================
+async function init() {
+  const { data: { session } } = await _supabase.auth.getSession();
+  if (session && session.user) {
+    await loadDashboard(session.user);
+  } else {
+    showScreen('landing');
+  }
+}
+
+// ============================================================
+// SCREEN MANAGEMENT
+// ============================================================
+function showScreen(name) {
+  document.getElementById('screen-landing').classList.toggle('hidden', name !== 'landing');
+  document.getElementById('screen-dashboard').classList.toggle('hidden', name !== 'dashboard');
+  document.getElementById('atty-badge').classList.toggle('hidden', name !== 'dashboard');
+  document.getElementById('btn-signout').classList.toggle('hidden', name !== 'dashboard');
+}
+
+function showRegister() {
+  document.getElementById('form-login').classList.add('hidden');
+  document.getElementById('form-register').classList.remove('hidden');
+}
+
+function showLogin() {
+  document.getElementById('form-register').classList.add('hidden');
+  document.getElementById('form-login').classList.remove('hidden');
+}
+
+// ============================================================
+// REGISTER
+// ============================================================
+async function register() {
+  const first  = document.getElementById('reg-first').value.trim();
+  const last   = document.getElementById('reg-last').value.trim();
+  const firm   = document.getElementById('reg-firm').value.trim();
+  const state  = document.getElementById('reg-state').value.trim().toUpperCase();
+  const phone  = document.getElementById('reg-phone').value.trim();
+  const email  = document.getElementById('reg-email').value.trim();
+  const pw     = document.getElementById('reg-password').value;
+  const pw2    = document.getElementById('reg-password2').value;
+  const btn    = document.getElementById('reg-btn');
+  const errEl  = document.getElementById('reg-error');
+
+  errEl.textContent = ''; errEl.classList.remove('show');
+
+  if (!first || !last)   { showError('reg-error', 'Please enter your full name.'); return; }
+  if (!email)            { showError('reg-error', 'Please enter your email address.'); return; }
+  if (pw.length < 8)     { showError('reg-error', 'Password must be at least 8 characters.'); return; }
+  if (pw !== pw2)        { showError('reg-error', 'Passwords do not match.'); return; }
+
+  btn.disabled = true; btn.textContent = 'Creating account...';
+
+  const { data, error } = await _supabase.auth.signUp({ email, password: pw });
+  if (error) { showError('reg-error', error.message); btn.disabled = false; btn.textContent = 'Create account'; return; }
+
+  if (data && data.user) {
+    // Create attorney_accounts record
+    const { error: acctErr } = await _supabase.from('attorney_accounts').insert({
+      auth_user_id: data.user.id,
+      email: email,
+      full_name: first + ' ' + last,
+      firm_name: firm || null,
+      phone: phone || null,
+      state: state || null,
+      subscription_status: 'inactive'
+    });
+
+    if (acctErr) { showError('reg-error', 'Account created but profile save failed. Please contact support.'); }
+
+    btn.textContent = 'Account created — redirecting to subscription...';
+    setTimeout(() => {
+      window.location.href = STRIPE_STANDARD + '?client_reference_id=' + data.user.id + '&prefilled_email=' + encodeURIComponent(email);
+    }, 1500);
+  }
+}
+
+// ============================================================
+// SIGN IN
+// ============================================================
+async function signIn() {
+  const email = document.getElementById('login-email').value.trim();
+  const pw    = document.getElementById('login-password').value;
+  const btn   = document.getElementById('login-btn');
+
+  if (!email || !pw) { showError('login-error', 'Please enter your email and password.'); return; }
+
+  btn.disabled = true; btn.textContent = 'Signing in...';
+
+  const { data, error } = await _supabase.auth.signInWithPassword({ email, password: pw });
+  if (error) { showError('login-error', error.message); btn.disabled = false; btn.textContent = 'Sign in to portal'; return; }
+
+  await loadDashboard(data.user);
+}
+
+// ============================================================
+// SIGN OUT
+// ============================================================
+async function signOut() {
+  await _supabase.auth.signOut();
+  currentAttorney = null;
+  showScreen('landing');
+}
+
+// ============================================================
+// LOAD DASHBOARD
+// ============================================================
+async function loadDashboard(user) {
+  // Fetch attorney account
+  const { data: acct, error } = await _supabase
+    .from('attorney_accounts')
+    .select('*')
+    .eq('auth_user_id', user.id)
+    .single();
+
+  if (error || !acct) {
+    showError('login-error', 'Attorney account not found. Please contact support at info@navigatemydebt.com.');
+    return;
+  }
+
+  currentAttorney = acct;
+
+  // Update header
+  document.getElementById('dash-welcome').textContent = 'Welcome, ' + (acct.full_name || 'Attorney');
+  document.getElementById('dash-firm').textContent = acct.firm_name || '';
+
+  // Subscription check
+  if (acct.subscription_status !== 'active') {
+    document.getElementById('sub-warning').classList.remove('hidden');
+  }
+
+  // Set intake link
+  const intakeURL = 'https://navigatemydebt.com/intake.html?ref=' + acct.intake_token;
+  document.getElementById('intake-link-display').textContent = intakeURL;
+
+  // Load clients
+  await loadClients(acct.id);
+
+  showScreen('dashboard');
+}
+
+// ============================================================
+// LOAD CLIENTS
+// ============================================================
+async function loadClients(attorneyId) {
+  const { data: clients, error } = await _supabase
+    .from('attorney_clients')
+    .select('*')
+    .eq('attorney_id', attorneyId)
+    .order('created_at', { ascending: false });
+
+  if (error || !clients) return;
+
+  // Stats
+  const total    = clients.length;
+  const complete = clients.filter(c => c.status === 'complete').length;
+  const started  = clients.filter(c => c.status === 'started').length;
+  const pending  = clients.filter(c => c.status === 'link_sent').length;
+
+  document.getElementById('stat-total').textContent    = total;
+  document.getElementById('stat-complete').textContent = complete;
+  document.getElementById('stat-started').textContent  = started;
+  document.getElementById('stat-pending').textContent  = pending;
+
+  // Render table
+  const tbody = document.getElementById('client-tbody');
+  if (total === 0) {
+    tbody.innerHTML = `<tr><td colspan="5">
+      <div class="empty-state">
+        <div class="empty-state-icon">📬</div>
+        <div class="empty-state-title">No clients yet</div>
+        <div class="empty-state-text">Copy your intake link above and send it to your first prospective client.<br>They'll appear here once they open the link.</div>
+      </div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = clients.map(c => {
+    const statusMap = {
+      link_sent: '<span class="status-badge status-sent">Link sent</span>',
+      started:   '<span class="status-badge status-started">In progress</span>',
+      complete:  '<span class="status-badge status-complete">Complete</span>'
+    };
+    const badge = statusMap[c.status] || statusMap['link_sent'];
+    const pct = c.completion_pct || 0;
+    const date = c.created_at ? new Date(c.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+    const reportBtn = c.report_ready
+      ? `<button class="btn-view-report" onclick="viewReport('${c.id}')">View report</button>`
+      : `<button class="btn-view-report" disabled>Pending</button>`;
+
+    return `<tr>
+      <td>
+        <div class="client-name">${escHtml(c.client_name || 'Unknown')}</div>
+        <div class="client-email">${escHtml(c.client_email || '—')}</div>
+      </td>
+      <td>${badge}</td>
+      <td>
+        <div class="completion-wrap">
+          <div class="completion-bar"><div class="completion-fill" style="width:${pct}%"></div></div>
+          <div class="completion-pct">${pct}%</div>
+        </div>
+      </td>
+      <td>${date}</td>
+      <td>${reportBtn}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// COPY INTAKE LINK
+// ============================================================
+function copyIntakeLink() {
+  const link = document.getElementById('intake-link-display').textContent;
+  navigator.clipboard.writeText(link).then(() => {
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy link'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ============================================================
+// VIEW REPORT (placeholder — will link to client's report)
+// ============================================================
+function viewReport(clientId) {
+  // Future: open report in modal or new tab
+  alert('Report viewer coming in next build. Client ID: ' + clientId);
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ============================================================
+// COMPASS ANIMATION
+// ============================================================
+(function(){
+  var needle=document.getElementById('hero-needle');
+  if(!needle)return;
+  var cx=50,cy=50,start=null;
+  var DRIFT=950,PAUSE=400,SETTLE=1200,TARGET=0;
+  function easeOutElastic(t){var c4=(2*Math.PI)/4.5;return t===0?0:t===1?1:Math.pow(2,-10*t)*Math.sin((t*10-0.75)*c4)+1;}
+  function easeInOutSine(t){return-(Math.cos(Math.PI*t)-1)/2;}
+  function drift(t){return Math.sin(t*Math.PI*2.1)*52+Math.sin(t*Math.PI*3.7+0.8)*26+Math.sin(t*Math.PI*5.3+1.4)*13;}
+  function angle(ms){
+    if(ms<DRIFT)return drift(ms/DRIFT);
+    if(ms<DRIFT+PAUSE){var t=(ms-DRIFT)/PAUSE;return drift(1)*(1-easeInOutSine(t));}
+    var t=Math.min((ms-DRIFT-PAUSE)/SETTLE,1);return easeOutElastic(t)*TARGET;
+  }
+  function frame(ts){if(!start)start=ts;var ms=ts-start;needle.setAttribute('transform','rotate('+angle(ms)+','+cx+','+cy+')');if(ms<DRIFT+PAUSE+SETTLE+300)requestAnimationFrame(frame);}
+  setTimeout(function(){requestAnimationFrame(frame);},300);
+})();
+
+// Topbar compass
+(function(){
+  var needle=document.getElementById('topbar-needle');
+  if(!needle)return;
+  var cx=50,cy=50,start=null;
+  var DRIFT=600,PAUSE=250,SETTLE=900,TARGET=0;
+  function easeOutElastic(t){var c4=(2*Math.PI)/4.5;return t===0?0:t===1?1:Math.pow(2,-10*t)*Math.sin((t*10-0.75)*c4)+1;}
+  function easeInOutSine(t){return-(Math.cos(Math.PI*t)-1)/2;}
+  function drift(t){return Math.sin(t*Math.PI*2.1)*38+Math.sin(t*Math.PI*3.7+0.8)*18+Math.sin(t*Math.PI*5.3+1.4)*9;}
+  function angle(ms){
+    if(ms<DRIFT)return drift(ms/DRIFT);
+    if(ms<DRIFT+PAUSE){var t=(ms-DRIFT)/PAUSE;return drift(1)*(1-easeInOutSine(t));}
+    var t=Math.min((ms-DRIFT-PAUSE)/SETTLE,1);return easeOutElastic(t)*TARGET;
+  }
+  function frame(ts){if(!start)start=ts;var ms=ts-start;needle.setAttribute('transform','rotate('+angle(ms)+','+cx+','+cy+')');if(ms<DRIFT+PAUSE+SETTLE+300)requestAnimationFrame(frame);}
+  setTimeout(function(){requestAnimationFrame(frame);},200);
+})();
+
+// ── BOOT ──
+window.addEventListener('load', function(){ init(); });
+</script>
+
+<!-- ============================================================
+     EXIT-INTENT POPUP — ATTORNEY
+     Fires when cursor exits top of browser.
+     Does NOT fire if attorney has an active subscription session.
+     Fires once per session only.
+     ============================================================ -->
+<div id="atty-exit-overlay" style="display:none;position:fixed;inset:0;background:rgba(30,45,61,0.55);z-index:9999;align-items:center;justify-content:center;padding:1rem">
+  <div style="background:#fff;border-radius:16px;padding:2rem 1.75rem;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(30,45,61,0.25);position:relative;text-align:center">
+    <button onclick="closeAttyExit()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:18px;color:#8a9aab;cursor:pointer;line-height:1" aria-label="Close">&times;</button>
+    <svg width="44" height="44" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 1rem;display:block">
+      <circle cx="50" cy="50" r="50" fill="#2e6b7e"/>
+      <polygon points="50,8 38,46 50,40 62,46" fill="#e8a020"/>
+      <polygon points="50,92 38,54 50,60 62,54" fill="#ffffff" opacity="0.5"/>
+      <circle cx="50" cy="50" r="9" fill="#1f4f5e"/>
+      <circle cx="50" cy="50" r="5" fill="#4a9aae"/>
+    </svg>
+    <div style="font-size:17px;font-weight:800;color:#1e2d3d;letter-spacing:-0.2px;margin-bottom:.5rem">Before you go —</div>
+    <div style="font-size:14px;color:#4a5a6b;line-height:1.65;margin-bottom:1.25rem">See what an organized client looks like when they walk in.</div>
+    <a href="https://navigatemydebt.com/attorney-preview.html" style="display:block;background:#2e6b7e;color:#fff;font-size:14px;font-weight:700;padding:12px 24px;border-radius:10px;text-decoration:none;margin-bottom:.75rem" onmouseover="this.style.background='#1f4f5e'" onmouseout="this.style.background='#2e6b7e'">See a sample dashboard</a>
+    <button onclick="closeAttyExit()" style="background:none;border:none;font-size:12px;color:#8a9aab;cursor:pointer;font-family:inherit">No thanks, I'll continue browsing</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Don't fire if attorney is already logged in with active subscription
+  function isSubscribed(){
+    try{
+      // If dashboard screen is visible, they're logged in — don't show
+      var dash=document.getElementById('screen-dashboard');
+      if(dash&&!dash.classList.contains('hidden'))return true;
+    }catch(e){}
+    return false;
+  }
+
+  if(sessionStorage.getItem('nmd_atty_exit_shown'))return;
+
+  var fired=false;
+  document.addEventListener('mouseleave',function(e){
+    if(fired)return;
+    if(e.clientY>10)return;
+    if(isSubscribed())return;
+    fired=true;
+    sessionStorage.setItem('nmd_atty_exit_shown','1');
+    var overlay=document.getElementById('atty-exit-overlay');
+    if(overlay)overlay.style.display='flex';
+    if(typeof fbq==='function') fbq('track','ViewContent',{content_name:'Exit Intent — Attorney Preview',content_category:'Attorney Exit Intent'});
+  });
+})();
+
+function closeAttyExit(){
+  var overlay=document.getElementById('atty-exit-overlay');
+  if(overlay)overlay.style.display='none';
+}
+</script>
+
+</body>
+</html>
